@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
 
@@ -13,8 +13,9 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState('');
     const [loder, setLoder]= useState(true);
     const googleProvider = new GoogleAuthProvider();
+    const GitHubSinUP = new GithubAuthProvider();
 
-    console.log('Auth',user);
+    // console.log('Auth',user);
     const userCreate =(email, password)=>{
         setLoder(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -36,11 +37,15 @@ const AuthProvider = ({children}) => {
         setLoder(true);
         return signInWithPopup(auth,googleProvider);
     }
+    const gitSingUp = ()=>{
+        setLoder(true);
+        return signInWithPopup(auth,GitHubSinUP);
+    }
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, currentUsere =>{
             setUser(currentUsere);
-            console.log('currntUser',currentUsere );
+            // console.log('currntUser',currentUsere );
             setLoder(false);
         });
         return ()=>{unsubscribe();} 
@@ -55,6 +60,7 @@ const AuthProvider = ({children}) => {
         logOut,
         passwordRestor,
         googleSingup,
+        gitSingUp
        
     };
     return (

@@ -4,6 +4,9 @@ import {
 import Root from "./Root";
 import ErrorPage from "./ErrorPage";
 import Home from "../Leout/Home/Home";
+import SingUp from "../Leout/Sing-In-UP/SingUp";
+import SingIn from "../Leout/Sing-In-UP/SingIn";
+import AddFood from "../Leout/AddFood/AddFood";
   const router = createBrowserRouter([
     {
       path: "/",
@@ -14,6 +17,30 @@ import Home from "../Leout/Home/Home";
           path: "/",
           element: <Home />
         },
+        {
+          path:'/singUp',
+          element:<SingUp/>
+        },
+        {
+          path:'/singIn',
+          element:<SingIn/>
+        },
+        {
+          path:'/AddFood',
+          element:<AddFood/>
+        },
+
+
+
+
+
+
+
+
+
+
+
+
       ],
     },
   ]);
