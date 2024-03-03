@@ -54,7 +54,7 @@ const AddFood = () => {
         // axiosUrl.get(`/user?email=${user?.email}`)
         // .then(res => setuserEmail(res.data))
         
-        if (!userName) {
+        if (!donerName) {
             Swal.fire({
                 title: 'Opp!',
                 text: 'ForBeden',

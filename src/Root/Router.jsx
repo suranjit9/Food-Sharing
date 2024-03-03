@@ -7,6 +7,7 @@ import Home from "../Leout/Home/Home";
 import SingUp from "../Leout/Sing-In-UP/SingUp";
 import SingIn from "../Leout/Sing-In-UP/SingIn";
 import AddFood from "../Leout/AddFood/AddFood";
+import AllProduct from "../Leout/AllProduct/AllProduct";
   const router = createBrowserRouter([
     {
       path: "/",
@@ -28,6 +29,11 @@ import AddFood from "../Leout/AddFood/AddFood";
         {
           path:'/AddFood',
           element:<AddFood/>,
+          
+        },
+        {
+          path:'/AllFood',
+          element:<AllProduct/>
           
         },
 
