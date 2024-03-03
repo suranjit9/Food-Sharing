@@ -4,11 +4,12 @@ import NavBar from "../Leout/NavBar/NavBar";
 
 const Root = () => {
     return (
-        <div>
+        <div className=" ">
             <NavBar></NavBar>
-            <div className="w-[80%] m-auto">
+            <div className="w-[1280px] m-auto">
             <Outlet></Outlet>
             </div>
+            
         </div>
     );
 };

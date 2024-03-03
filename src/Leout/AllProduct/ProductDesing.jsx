@@ -2,34 +2,13 @@ import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAxious from "../../Hook/BaseUrl/useAxious";
+import useTimer from "../../Hook/ExperFood/useTimer";
 
 const ProductDesign = ({ food }) => {
     const { _id, Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName } = food;
     const baseUrl = useAxious();
-
-    // Parse expiration time
-    // const expiredInMilliseconds = parseInt(Expired) * (
-    //     ExpiredTime === "Day" ? 24 * 60 * 60 * 1000 : // if 'Day'
-    //     ExpiredTime === "Hours" ? 60 * 60 * 1000 : // if 'Hours'
-    //     60 * 1000 // if 'Minutes'
-    // );
-
-    // const [remainingTime, setRemainingTime] = useState(expiredInMilliseconds);
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         setRemainingTime(prevTime => prevTime - 1000);
-    //     }, 1000);
-
-    //     return () => clearInterval(intervalId);
-    // }, []);
-
-    // const expiredMessage = remainingTime <= 0 ? "This product has expired" : "";
-
-    // const countdownTimer = remainingTime > 0 && (
-    //     <div className="badge badge-secondary">{formatTime(remainingTime)}</div>
-    // );
-   
+    // const timer = useTimer(Expired, ExpiredTime);
+    // console.log(timer)
 
     const experTime = parseInt(Expired)*(
         ExpiredTime === "Day"? 24*60*60*1000 : // If Day
@@ -40,7 +19,7 @@ const ProductDesign = ({ food }) => {
     // console.log(experTime)
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setremaningTime(preTime => preTime-600000)
+            setremaningTime(preTime => preTime-1000)
         },1000);
         return ()=> clearInterval(interval);
     },[]);
@@ -66,7 +45,7 @@ const ProductDesign = ({ food }) => {
  
     }
     const countdownTimer = remaningTime > 0 && (
-            <div className="badge badge-secondary">{timeFormet(remaningTime)}</div>
+            <div className="badge badge-secondary">EXP: {timeFormet(remaningTime)}</div>
         );
     if (remaningTime <= 0) {
         baseUrl.patch("/addFood", {FoodStatus:'Uavailable'})
@@ -74,19 +53,24 @@ const ProductDesign = ({ food }) => {
     }
  const expiredMessage = remaningTime <= 0 ? "This product has expired" : "";
     return (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl relative">
             <figure>
-                <img className="w-[319Px] h-[208px]" src={FoodImage} alt="Shoes" />
+                <img className="w-screen h-[208px]" src={FoodImage} alt="Shoes" />
+                
             </figure>
+            <div className=" absolute ml-[3%] mt-[2%]">
+                        <h3 >{countdownTimer}</h3>
+                    </div>
             <div className="card-body">
                 <div className="flex justify-between relative">
                     <div>
                         <h2 className="card-title">
                             {foodName}
-                            {countdownTimer}
+                            
                         </h2>
-                        <p>{expiredMessage}</p>
+                        {/* <p>{timer.expiredMessage}</p> */}
                     </div>
+                    
                     <div className="badge badge-outline bg-white absolute ml-[80%] mt-[-25%] pr-[2%]">
                         <h2 className="text-green-700 font-bold">{FoodStatus}</h2>
                     </div>
@@ -104,11 +88,11 @@ const ProductDesign = ({ food }) => {
                         </div>
                     </div>
                 </div>
-                <div className="card-actions">
+                {/* <div className="card-actions">
                     <div>
                         <h4>Location: {Location}</h4>
                     </div>
-                </div>
+                </div> */}
                 <div className="card-actions justify-end">
                     <Link to={`/AllFood:${_id}`}>
                         <button className="btn btn-sm">Request The Food <MdNavigateNext /></button>
