@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 import useAxious from '../../Hook/BaseUrl/useAxious';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { authContext } from '../../AuthProvider/AuthProvider';
 
 const AddFood = () => {
@@ -9,11 +9,15 @@ const AddFood = () => {
     // console.log(user)
     const axiosUrl = useAxious();
     const [userEmail , setuserEmail] = useState({});
-    // useEffect(()=>{
-    //     axiosUrl.get(`/user?email=${user?.email}`)
-    //     .then(res => setuserEmail(res.data))
-    // },[axiosUrl,user?.email ])
-console.log(userEmail)
+    useEffect(()=>{
+        axiosUrl.get(`/user?email=${user?.email}`)
+        .then(res => setuserEmail(res.data))
+    },[axiosUrl,user?.email ])
+    const donerName = userEmail?.firstname || user?.displayName;
+    const donerImage = userEmail?.url || user?.photoURL;
+// console.log(userEmail,user)
+// // console.log(userEmail.firstname)
+// console.log('helloImahhhh',userImage)
     const handalAddCoffee = e => {
         e.preventDefault();
         const from = e.target;
@@ -24,9 +28,9 @@ console.log(userEmail)
         const Expired = from.Expired.value;
         const ExpiredTime = from.ExpiredTime.value;
         const Notes = from.Notes.value;
-        const FoodStatus = {FoodStatus: "available"} ;
+        const FoodStatus = "available" ;
 
-        const fromData = {userEmail, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
+        const fromData = {donerName, donerImage, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
         console.log(fromData);
         // fetch('http://localhost:5000/AddCoffee', {
         //     method: 'POST',
@@ -47,11 +51,19 @@ console.log(userEmail)
         //             })
         //         }
         //     })
-        axiosUrl.get(`/user?email=${user?.email}`)
-        .then(res => setuserEmail(res.data))
+        // axiosUrl.get(`/user?email=${user?.email}`)
+        // .then(res => setuserEmail(res.data))
         
-        if (userEmail) {
-            axiosUrl.post('/addFood',fromData)
+        if (!userName) {
+            Swal.fire({
+                title: 'Opp!',
+                text: 'ForBeden',
+                icon: 'Worrng',
+                confirmButtonText: 'Ok'
+            })
+             
+        }else{
+           axiosUrl.post('/addFood',fromData)
             .then(res =>{
                 if (res.data.insertedId) {
                                 Swal.fire({
@@ -61,14 +73,7 @@ console.log(userEmail)
                                     confirmButtonText: 'Ok'
                                 })
                             }
-            })  
-        }else{
-            Swal.fire({
-                title: 'Opp!',
-                text: 'ForBeden',
-                icon: 'Worrng',
-                confirmButtonText: 'Ok'
-            })
+            }) 
         }
         
         

@@ -27,7 +27,8 @@ import AddFood from "../Leout/AddFood/AddFood";
         },
         {
           path:'/AddFood',
-          element:<AddFood/>
+          element:<AddFood/>,
+          
         },
 
 
