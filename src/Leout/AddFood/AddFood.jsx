@@ -1,13 +1,19 @@
 import Swal from 'sweetalert2'
 import useAxious from '../../Hook/BaseUrl/useAxious';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { authContext } from '../../AuthProvider/AuthProvider';
 
 const AddFood = () => {
     const {user} = useContext(authContext);
-    const userEmail = {email:user.email};
-    console.log(user)
+    // const userEmail = {email:user.email};
+    // console.log(user)
     const axiosUrl = useAxious();
+    const [userEmail , setuserEmail] = useState({});
+    // useEffect(()=>{
+    //     axiosUrl.get(`/user?email=${user?.email}`)
+    //     .then(res => setuserEmail(res.data))
+    // },[axiosUrl,user?.email ])
+console.log(userEmail)
     const handalAddCoffee = e => {
         e.preventDefault();
         const from = e.target;
@@ -41,17 +47,30 @@ const AddFood = () => {
         //             })
         //         }
         //     })
-        axiosUrl.post('/addFood',fromData)
-        .then(res =>{
-            if (res.data.insertedId) {
-                            Swal.fire({
-                                title: 'success!',
-                                text: 'Add a Food Succesfully',
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            })
-                        }
-        })
+        axiosUrl.get(`/user?email=${user?.email}`)
+        .then(res => setuserEmail(res.data))
+        
+        if (userEmail) {
+            axiosUrl.post('/addFood',fromData)
+            .then(res =>{
+                if (res.data.insertedId) {
+                                Swal.fire({
+                                    title: 'success!',
+                                    text: 'Add a Food Succesfully',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                })
+                            }
+            })  
+        }else{
+            Swal.fire({
+                title: 'Opp!',
+                text: 'ForBeden',
+                icon: 'Worrng',
+                confirmButtonText: 'Ok'
+            })
+        }
+        
         
     }
 

@@ -30,9 +30,9 @@ const SingUp = () => {
             console.log(result.user);
             
             const createdAC = result.user?.metadata?.creationTime;
-            const name = {firstname, lastname, url};
+            // const name = {firstname, lastname, url};
             
-            const user = {email, createACdate:createdAC, name};
+            const user = {email, createACdate:createdAC, firstname:firstname, lastname:lastname, url:url};
             fetch('http://localhost:5000/user',{
                 method:"POST",
                 headers:{

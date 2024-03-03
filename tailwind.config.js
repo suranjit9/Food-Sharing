@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero': "url('./src/assets/search-img.png')",
+        // 'footer-texture': "url('/img/footer-texture.png')",
+      }
+    },
   },
   plugins: [require("daisyui")],
 }
