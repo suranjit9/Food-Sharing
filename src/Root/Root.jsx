@@ -4,9 +4,9 @@ import NavBar from "../Leout/NavBar/NavBar";
 
 const Root = () => {
     return (
-        <div className=" ">
+        <div className="max-w-full m-auto ">
             <NavBar></NavBar>
-            <div className="w-[1280px] m-auto">
+            <div >
             <Outlet></Outlet>
             </div>
             

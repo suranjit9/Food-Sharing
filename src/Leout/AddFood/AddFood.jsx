@@ -15,6 +15,7 @@ const AddFood = () => {
     },[axiosUrl,user?.email ])
     const donerName = userEmail?.firstname || user?.displayName;
     const donerImage = userEmail?.url || user?.photoURL;
+    const email = userEmail?.email || user?.email;
 // console.log(userEmail,user)
 // // console.log(userEmail.firstname)
 // console.log('helloImahhhh',userImage)
@@ -30,7 +31,7 @@ const AddFood = () => {
         const Notes = from.Notes.value;
         const FoodStatus = "available" ;
 
-        const fromData = {donerName, donerImage, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
+        const fromData = {donerName, email, donerImage, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
         console.log(fromData);
         // fetch('http://localhost:5000/AddCoffee', {
         //     method: 'POST',

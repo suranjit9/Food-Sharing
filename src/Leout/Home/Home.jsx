@@ -1,3 +1,4 @@
+import PageTitle from "../../ShearFile/PageTitle";
 import AllProduct from "../AllProduct/AllProduct";
 import Banner from "./Banner";
 
@@ -6,7 +7,8 @@ const Home = () => {
     return (
         <div>
           <Banner></Banner>
-          <div className="w-[80%] m-auto">
+          {/* <PageTitle></PageTitle> */}
+          <div className=" ">
           <AllProduct></AllProduct>
           </div>
           

@@ -51,7 +51,7 @@ const NavBar = () => {
                                 <span className="badge">New</span>
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
+                        <li><Link to={'/ManageFoods'}>Manage My Foods</Link></li>
                         <li onClick={logout}><a>Logout</a></li>
                     </ul>
                 </div>

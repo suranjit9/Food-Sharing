@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAxious from "../../Hook/BaseUrl/useAxious";
-import useTimer from "../../Hook/ExperFood/useTimer";
+
 
 const ProductDesign = ({ food }) => {
     const { _id, Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName } = food;
@@ -19,7 +19,7 @@ const ProductDesign = ({ food }) => {
     // console.log(experTime)
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setremaningTime(preTime => preTime-1000)
+            setremaningTime(preTime => preTime-100000)
         },1000);
         return ()=> clearInterval(interval);
     },[]);
@@ -47,15 +47,19 @@ const ProductDesign = ({ food }) => {
     const countdownTimer = remaningTime > 0 && (
             <div className="badge badge-secondary">EXP: {timeFormet(remaningTime)}</div>
         );
-    if (remaningTime <= 0) {
-        baseUrl.patch("/addFood", {FoodStatus:'Uavailable'})
-        .then(res => console.log(res.data))
-    }
+
+    useEffect(()=>{
+        if (remaningTime <= 0) {
+            baseUrl.patch(`/addFood/${_id}`, {FoodStatus:'Uavailable', Expired: 0})
+            .then()
+        }
+    },[_id, baseUrl, remaningTime])
+    
  const expiredMessage = remaningTime <= 0 ? "This product has expired" : "";
     return (
-        <div className="card bg-base-100 shadow-xl relative">
+        <div className="card  bg-base-100 shadow-xl relative ">
             <figure>
-                <img className="w-screen h-[208px]" src={FoodImage} alt="Shoes" />
+                <img className="w-screen h-[200px]" src={FoodImage} alt="Shoes" />
                 
             </figure>
             <div className=" absolute ml-[3%] mt-[2%]">
@@ -71,11 +75,11 @@ const ProductDesign = ({ food }) => {
                         {/* <p>{timer.expiredMessage}</p> */}
                     </div>
                     
-                    <div className="badge badge-outline bg-white absolute ml-[80%] mt-[-25%] pr-[2%]">
-                        <h2 className="text-green-700 font-bold">{FoodStatus}</h2>
+                    <div className="badge badge-outline bg-white absolute ml-[75%] mt-[-25%] pr-[2%]">
+                        <h2 className={ FoodStatus === "available"? "text-green-700 font-bold" : "text-red-700 font-bold" }>{FoodStatus}</h2>
                     </div>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <div className="avatar">
                         <div className="w-8 rounded-full">
                             <img src={donerImage} alt="Doner" />
@@ -84,7 +88,7 @@ const ProductDesign = ({ food }) => {
                     </div>
                     <div>
                         <div>
-                            <h3>Qty:<span className="text-green-800">{Quantity}</span> Person</h3>
+                            <h3>Qty:<span className="text-green-800 font-bold">{Quantity}</span></h3>
                         </div>
                     </div>
                 </div>
