@@ -11,8 +11,8 @@ const ProductDesign = ({ food }) => {
     // console.log(_id)
 
     const experTime = parseInt(Expired)*(
-        ExpiredTime === "Day"? 24*60*60*1000 : // If Day
-        ExpiredTime === "Hours"? 60*60*1000 : // If Hours
+        ExpiredTime === "Day"? 24*60*60*1000 : 
+        ExpiredTime === "Hours"? 60*60*1000 : 
         60*1000 // If Minutes
     );
     const [remaningTime, setremaningTime] = useState(experTime);
@@ -50,7 +50,7 @@ const ProductDesign = ({ food }) => {
 
     useEffect(()=>{
         if (remaningTime <= 0) {
-            baseUrl.patch(`/addFood/time${_id}`, {FoodStatus:'Uavailable', Expired: 0})
+            baseUrl.patch(`/addFood/time/${_id}`, {FoodStatus:'Uavailable'})
             .then()
         }
     },[_id, baseUrl, remaningTime]);
@@ -58,10 +58,7 @@ const ProductDesign = ({ food }) => {
     
 //  const expiredMessage = remaningTime <= 0 ? "This product has expired" : "";
 
-    const singalFood = (_id) =>{
-        baseUrl.post(`/addFood/SingalFood`,_id)
-        .then(res => console.log(res.data))
-    }
+    
     return (
         <div className="card  bg-base-100 shadow-xl relative ">
             <figure>
