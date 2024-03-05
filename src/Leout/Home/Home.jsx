@@ -1,16 +1,15 @@
 import PageTitle from "../../ShearFile/PageTitle";
 import AllProduct from "../AllProduct/AllProduct";
 import Banner from "./Banner";
+import FetherFood from "./FetherFood";
 
 
 const Home = () => {
     return (
         <div>
           <Banner></Banner>
-          {/* <PageTitle></PageTitle> */}
-          <div className=" ">
-          <AllProduct></AllProduct>
-          </div>
+          <FetherFood ></FetherFood>
+          
           
         </div>
     );

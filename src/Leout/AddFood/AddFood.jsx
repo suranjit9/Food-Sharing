@@ -16,7 +16,8 @@ const AddFood = () => {
     const donerName = userEmail?.firstname || user?.displayName;
     const donerImage = userEmail?.url || user?.photoURL;
     const email = userEmail?.email || user?.email;
-// console.log(userEmail,user)
+
+console.log(email)
 // // console.log(userEmail.firstname)
 // console.log('helloImahhhh',userImage)
     const handalAddCoffee = e => {
@@ -33,27 +34,7 @@ const AddFood = () => {
 
         const fromData = {donerName, email, donerImage, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
         console.log(fromData);
-        // fetch('http://localhost:5000/AddCoffee', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(fromData)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log(data)
-        //         if (data.insertedId) {
-        //             Swal.fire({
-        //                 title: 'success!',
-        //                 text: 'Add a Coffee Succesfully',
-        //                 icon: 'success',
-        //                 confirmButtonText: 'Ok'
-        //             })
-        //         }
-        //     })
-        // axiosUrl.get(`/user?email=${user?.email}`)
-        // .then(res => setuserEmail(res.data))
+        
         
         if (!donerName) {
             Swal.fire({

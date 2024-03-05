@@ -6,7 +6,7 @@ import useAxious from "../../Hook/BaseUrl/useAxious";
 
 
 const AllProduct = () => {
-    // const allFood = useAllProduct([asc, dsc]);
+    // const allFood = useAllProduct(asc, search);
     const [allFood, setallFood] = useState([]);
     const baseUrl = useAxious()
     const [asc, setAsc] = useState(true);
@@ -15,16 +15,11 @@ const AllProduct = () => {
     // console.log(search);
     const title = "Our Available Foods";
     useEffect(() => {
-        baseUrl.get(`/addFood?sort=${asc ? "asc" : "dsc"}&search=${search}`)
+        baseUrl.get(`/addFood/Available?sort=${asc ? "asc" : "dsc"}&search=${search}`)
             .then(res => setallFood(res.data))
     }, [baseUrl, asc, search]);
 
-    // const handalsearch = (e) =>{
-    //    e.preventDefault();
-    //     const text = e.target.search.value;
-    //     setSearch(text);
-    // onChange={(e)=>setSearch(e.target.value)}
-    // }
+    
     return (
         <div className="space-y-4">
             <PageTitle title={title}></PageTitle>
@@ -33,7 +28,8 @@ const AllProduct = () => {
                     <button className="btn btn-xl" onClick={() => setAsc(!asc)}>{asc ? "QTY: High to Low" : "QTY: Low to High"}</button>
                 </div>
                 <div >
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+               
                 </div>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4 w-[80%] m-auto ">

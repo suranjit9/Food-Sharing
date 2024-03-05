@@ -8,7 +8,7 @@ const ProductDesign = ({ food }) => {
     const { _id, Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName } = food;
     const baseUrl = useAxious();
     // const timer = useTimer(Expired, ExpiredTime);
-    // console.log(timer)
+    // console.log(_id)
 
     const experTime = parseInt(Expired)*(
         ExpiredTime === "Day"? 24*60*60*1000 : // If Day
@@ -50,12 +50,18 @@ const ProductDesign = ({ food }) => {
 
     useEffect(()=>{
         if (remaningTime <= 0) {
-            baseUrl.patch(`/addFood/${_id}`, {FoodStatus:'Uavailable', Expired: 0})
+            baseUrl.patch(`/addFood/time${_id}`, {FoodStatus:'Uavailable', Expired: 0})
             .then()
         }
-    },[_id, baseUrl, remaningTime])
+    },[_id, baseUrl, remaningTime]);
+
     
- const expiredMessage = remaningTime <= 0 ? "This product has expired" : "";
+//  const expiredMessage = remaningTime <= 0 ? "This product has expired" : "";
+
+    const singalFood = (_id) =>{
+        baseUrl.post(`/addFood/SingalFood`,_id)
+        .then(res => console.log(res.data))
+    }
     return (
         <div className="card  bg-base-100 shadow-xl relative ">
             <figure>
@@ -98,7 +104,7 @@ const ProductDesign = ({ food }) => {
                     </div>
                 </div> */}
                 <div className="card-actions justify-end">
-                    <Link to={`/AllFood:${_id}`}>
+                    <Link to={`/SingalFood/${_id}`}>
                         <button className="btn btn-sm">Request The Food <MdNavigateNext /></button>
                     </Link>
                 </div>

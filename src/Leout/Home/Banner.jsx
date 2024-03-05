@@ -1,13 +1,18 @@
+import { useContext, useState } from "react";
 import banner1 from "../../assets/If you are hungry then you can take the food (1).png"
+import { myContex } from "../../MyProvider/MyProvider";
 
-const Banner = () => {
+
+const Banner = (homeSe) => {
+  const { value, setValue } = useContext(myContex);
+  // console.log(homeSe)
   return (
     <div className="carousel w-full relative" id="bannerContainer">
       <div id="slide1" className="carousel-item relative w-full">
         <img src={banner1} className="w-full" alt="Banner Image" />
-        <div className="absolute ml-[10%] mt-[22%]">
-          <label className="input py-8 input-bordered flex items-center  ml-8 md:gap-72">
-            <input type="text" name="Search" className="grow " placeholder="Search" />
+        <div className="absolute ml-[10%] mt-[20%]">
+          <label className="input  input-bordered flex items-center  ml-8 md:gap-72 md:py-8">
+            <input onChange={(e)=>setValue(e.target.value)} type="text" name="Search" className="grow " placeholder="Search" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -22,14 +27,14 @@ const Banner = () => {
             </svg>
           </label>
         </div>
-        <div className=" absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 ">
+        {/* <div className=" absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 ">
           <a href="#slide4" className="btn btn-circle ">
             ❮
           </a>
           <a href="#slide2" className="btn btn-circle ">
             ❯
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

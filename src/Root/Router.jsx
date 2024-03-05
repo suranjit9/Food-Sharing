@@ -9,6 +9,8 @@ import SingIn from "../Leout/Sing-In-UP/SingIn";
 import AddFood from "../Leout/AddFood/AddFood";
 import AllProduct from "../Leout/AllProduct/AllProduct";
 import ManageFoods from "../Leout/ManageMyFoods/ManageFoods";
+import SingalFood from "../Leout/AllProduct/SingalFood";
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -40,6 +42,12 @@ import ManageFoods from "../Leout/ManageMyFoods/ManageFoods";
           path:'/ManageFoods',
           element:<ManageFoods/>
         },
+        {
+          path:'/SingalFood/:id',
+          element:<SingalFood/>,
+          // loader: ({ params }) => fetch(`http://localhost:5000/addFood/hello/${params.id}`)
+          
+        }
 
 
 

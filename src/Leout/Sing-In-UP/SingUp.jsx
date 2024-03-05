@@ -5,8 +5,10 @@ import { authContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
+import useAxious from "../../Hook/BaseUrl/useAxious";
 const SingUp = () => {
     const {googleSingup, userCreate, gitSingUp} = useContext(authContext);
+    const baseUrl = useAxious();
     // console.log(user);
     const hendalEmail = e =>{
         e.preventDefault();
@@ -33,19 +35,13 @@ const SingUp = () => {
             // const name = {firstname, lastname, url};
             
             const user = {email, createACdate:createdAC, firstname:firstname, lastname:lastname, url:url};
-            fetch('http://localhost:5000/user',{
-                method:"POST",
-                headers:{
-                    'content-type':'application/json'
-                },
-                body:JSON.stringify(user),
-            })
-                .then(res =>res.json())
-                .then(data =>{
-                    if (data.insertedId) {
-                      Swal.fire("Sing Up Successfully!");  
-                    }
-                })
+            baseUrl.post(`/user`,user )
+            .then(res =>{
+                if (res.data.insertedId) {
+                              Swal.fire("Sing Up Successfully!");  
+                            }
+            } )
+
         })
 
         .catch()
