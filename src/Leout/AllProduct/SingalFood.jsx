@@ -25,10 +25,11 @@ const SingalFood = () => {
     // console.log({coustomerEmail}, {coustomerName})
     
     const { _id, Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName, email } = foodData;
+   console.log({foodData})
     useEffect(() => {
         baseUrl.get(`/addFood/SingalFood/${id}`)
             .then(res => setFood(res.data))
-    }, []);
+    }, [id, baseUrl]);
     const retime = new Date();
     const reFood = {
         amount:amount,

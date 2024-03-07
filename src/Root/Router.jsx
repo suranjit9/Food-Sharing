@@ -10,6 +10,7 @@ import AddFood from "../Leout/AddFood/AddFood";
 import AllProduct from "../Leout/AllProduct/AllProduct";
 import ManageFoods from "../Leout/ManageMyFoods/ManageFoods";
 import SingalFood from "../Leout/AllProduct/SingalFood";
+import FoodRe from "../FoodRE/FoodRe";
 
   const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ import SingalFood from "../Leout/AllProduct/SingalFood";
         {
           path:'/ManageFoods',
           element:<ManageFoods/>
+        },
+        {
+          path:'/requstFood',
+          element:<FoodRe/>
         },
         {
           path:'/SingalFood/:id',
