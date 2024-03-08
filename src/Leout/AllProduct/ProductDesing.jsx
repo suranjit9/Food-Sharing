@@ -19,7 +19,7 @@ const ProductDesign = ({ food }) => {
     // console.log(experTime)
     useEffect(()=>{
         const interval = setInterval(()=>{
-            setremaningTime(preTime => preTime-100000)
+            setremaningTime(preTime => preTime-1000)
         },1000);
         return ()=> clearInterval(interval);
     },[]);

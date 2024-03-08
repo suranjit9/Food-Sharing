@@ -1,8 +1,8 @@
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAxious from "../../Hook/BaseUrl/useAxious";
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../../AuthProvider/AuthProvider";
-import { data } from "autoprefixer";
+
 
 
 
@@ -24,7 +24,7 @@ const SingalFood = () => {
     const coustomerName = userfilt?.firstname || user?.displayName;
     // console.log({coustomerEmail}, {coustomerName})
     
-    const { _id, Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName, email } = foodData;
+    const { Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName, FoodStatus, donerImage, donerName, email } = foodData;
    console.log({foodData})
     useEffect(() => {
         baseUrl.get(`/addFood/SingalFood/${id}`)

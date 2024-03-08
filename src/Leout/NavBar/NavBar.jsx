@@ -41,8 +41,9 @@ const NavBar = () => {
                     <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                            <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
                         </div>
+                        <h4>{user?.displayName}</h4>
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow bg-base-100 rounded-box w-52 ">
                         <li>
@@ -52,7 +53,8 @@ const NavBar = () => {
                             </a>
                         </li>
                         <li><Link to={'/ManageFoods'}>Manage My Foods</Link></li>
-                        <li><Link to={'/requstFood'}>requstFood</Link></li>
+                        <li><Link to={'/requstFood'}>Recived Food Requst</Link></li>
+                        <li><Link to={'/sentFood'}>Sent Food Requst</Link></li>
                         <li onClick={logout}><a>Logout</a></li>
                     </ul>
                 </div>

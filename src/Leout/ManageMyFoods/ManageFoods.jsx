@@ -29,6 +29,12 @@ const ManageFoods = () => {
             })
     }, [baseUrl, coustomerEmail]);
 
+    // Dalete Food......
+    const hendalDelate = _id =>{
+        baseUrl.delete(`/ManageFoods/delete/${_id}`)
+        .then(res=>console.log(res.data))
+    }
+
     const colamm = [
         {
             name: 'Food Img',
@@ -60,11 +66,11 @@ const ManageFoods = () => {
         },
         {
             name: 'Update',
-            cell: (row) => <Link><button className="btn btn-outline btn-sm" onClick={() => alert(row.foodName)}>Update</button></Link>
+            cell: (row) => <Link to={`/Updatefood/${row._id}`}><button className="btn btn-outline btn-sm">Update</button></Link>
         },
         {
             name: 'Dlete',
-            cell: (row) => <Link><button className="btn btn-outline btn-sm bg-red-800 text-white" onClick={() => alert(row.foodName)}>Dlete</button></Link>
+            cell: (row) => <Link><button className="btn btn-outline btn-sm bg-red-800 text-white" onClick={() => hendalDelate(row._id)}>Dlete</button></Link>
         }
 
     ];

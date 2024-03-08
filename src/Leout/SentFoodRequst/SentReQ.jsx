@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import useAxious from "../Hook/BaseUrl/useAxious";
-import { authContext } from "../AuthProvider/AuthProvider";
-import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
+import { Link } from 'react-router-dom';
+import { authContext } from '../../AuthProvider/AuthProvider';
+import useAxious from '../../Hook/BaseUrl/useAxious';
 
+const SentReQ = () => {
 
-const FoodRe = () => {
     const baseUrl = useAxious();
     const {user} = useContext(authContext);
     const [userEmail , setuserEmail] = useState([]);
     const [reData , setreData] = useState([]);
-    const [foodStust , setfoodStust] = useState('Panding');
+    // const [foodStust , setfoodStust] = useState('Panding');
     
     const userfilt = userEmail[0];
     useEffect(()=>{
@@ -20,12 +20,12 @@ const FoodRe = () => {
 
     const coustomerEmail = userfilt?.email || user?.email;
     console.log(userEmail )
-    // console.log(user )
+    console.log(user )
     // console.log(reData )
     console.log(coustomerEmail )
     // const coustomerName = userfilt?.firstname || user?.displayName;
     useEffect(()=>{
-        baseUrl.get(`/requstFood/foodWoner?email=${coustomerEmail}`)
+        baseUrl.get(`/requstFood/sentreQ?email=${coustomerEmail}`)
         .then(res => setreData(res.data))
     },[baseUrl, coustomerEmail]);
     
@@ -56,11 +56,13 @@ const FoodRe = () => {
         },
         {
             name:'Stust',
-            cell:(row)=><Link><button className="btn btn-outline" onClick={()=>alert(row.foodName)}>{foodStust}</button></Link>
+            cell:(row)=><Link><button className="btn btn-outline">{row.foodStust}</button></Link>
         }
         
     ];
-    return <DataTable
+    return (
+        <div>
+            <DataTable
     columns={colamm} 
     data={reData}
     pagination
@@ -70,7 +72,8 @@ const FoodRe = () => {
     highlightOnHover
     
     ></DataTable>
-    
+        </div>
+    );
 };
 
-export default FoodRe;
+export default SentReQ;

@@ -1,24 +1,34 @@
 import Swal from 'sweetalert2'
-import useAxious from '../../Hook/BaseUrl/useAxious';
+
 import { useContext, useEffect, useState } from 'react';
 import { authContext } from '../../AuthProvider/AuthProvider';
+import useAxious from '../../Hook/BaseUrl/useAxious';
+import { useParams } from 'react-router-dom';
 
-const AddFood = () => {
+
+const Update = () => {
+    const { id } = useParams();
     const { user } = useContext(authContext);
     // const userEmail = {email:user.email};
-    // console.log(user)
+    
     const axiosUrl = useAxious();
-    const [userEmail, setuserEmail] = useState({});
-
+    // const [userEmail, setuserEmail] = useState({});
+    const [updateData, setupdateData] = useState([]);
+    // console.log({id}, {updateData})
+     const {  Expired, ExpiredTime, FoodImage, Location, Notes, Quantity, foodName  } = updateData;
+    // useEffect(() => {
+    //     axiosUrl.get(`/user?email=${user?.email}`)
+    //         .then(res => setuserEmail(res.data))
+    // }, [axiosUrl, user?.email])
+    // const donerName = userEmail?.firstname || user?.displayName;
+    
+    // const email = userEmail?.email || user?.email;
     useEffect(() => {
-        axiosUrl.get(`/user?email=${user?.email}`)
-            .then(res => setuserEmail(res.data))
-    }, [axiosUrl, user?.email])
-    const donerName = userEmail?.firstname || user?.displayName;
-    const donerImage = userEmail?.url || user?.photoURL;
-    const email = userEmail?.email || user?.email;
+        axiosUrl.get(`/addFood/Updatefood/${id}`)
+            .then(res => setupdateData(res.data))
+    }, [id, axiosUrl]);
 
-    console.log(email)
+    // console.log(email)
     // // console.log(userEmail.firstname)
     // console.log('helloImahhhh',userImage)
     const handalAddCoffee = e => {
@@ -31,39 +41,36 @@ const AddFood = () => {
         const Expired = from.Expired.value;
         const ExpiredTime = from.ExpiredTime.value;
         const Notes = from.Notes.value;
-        const FoodStatus = "available";
         const Category = from.Category.value;
 
-        const fromData = { donerName, Category, email, donerImage, foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes, FoodStatus };
-        console.log(fromData);
+        const fromData = {  Category,  foodName, FoodImage, Location, Quantity, Expired, ExpiredTime, Notes};
+        // console.log(fromData);
+        try {
+            axiosUrl.put(`/addFood/Updatefood/${id}`, fromData)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: 'success!',
+                        text: 'Update your Food Succesfully',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    })
 
-
-        if (!donerName) {
-            Swal.fire({
-                title: 'Opp!',
-                text: 'ForBeden',
-                icon: 'Worrng',
-                confirmButtonText: 'Ok'
+                }else{
+                    Swal.fire({
+                        title: 'Opp!',
+                        text: 'ForBeden',
+                        icon: 'Worrng',
+                        confirmButtonText: 'Ok'
+                    })
+                }
             })
-
-        } else {
-            axiosUrl.post('/addFood', fromData)
-                .then(res => {
-                    if (res.data.insertedId) {
-                        Swal.fire({
-                            title: 'success!',
-                            text: 'Add a Food Succesfully',
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                        })
-
-                    }
-                })
+        } catch (error) {
+           console.log(error) 
         }
-
-
+  
     }
-
     return (
         <div className="bg-gray-100 p-6 md:p-12 lg:p-24 w-full mx-auto">
             <h2 className="text-3xl font-extrabold text-center mb-8">Add a Food</h2>
@@ -72,33 +79,33 @@ const AddFood = () => {
                     <label className="label">
                         <span className="label-text">Food Name</span>
                     </label>
-                    <input type="text" name='foodName' placeholder="Food Name" required className="input input-bordered w-full max-w-md" />
+                    <input type="text" name='foodName' defaultValue={foodName} placeholder="Food Name"  className="input input-bordered w-full max-w-md" />
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Food Image</span>
                     </label>
-                    <input type="text" name='FoodImage' placeholder="Food Image URL" required className="input input-bordered w-full max-w-md" />
+                    <input type="text" name='FoodImage' defaultValue={FoodImage} placeholder="Food Image URL"  className="input input-bordered w-full max-w-md" />
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Pickup Location</span>
                     </label>
-                    <input type="text" name='Location' placeholder="Pickup Location" required className="input input-bordered w-full max-w-md" />
+                    <input type="text" name='Location' defaultValue={Location} placeholder="Pickup Location"  className="input input-bordered w-full max-w-md" />
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Food Quantity</span>
                     </label>
-                    <input type="number" name='Quantity' placeholder="Quantity" required className="input input-bordered w-full max-w-md" />
+                    <input type="number" name='Quantity' defaultValue={Quantity} placeholder="Quantity"  className="input input-bordered w-full max-w-md" />
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Expired Date/Time</span>
                     </label>
                     <div className="flex items-center">
-                        <input type="number" name='Expired' placeholder="Date/Time" required className="input input-bordered w-full max-w-md" />
-                        <select type="text" name='ExpiredTime' required className="select select-bordered ml-2">
+                        <input type="number" name='Expired' defaultValue={Expired} placeholder="Date/Time"  className="input input-bordered w-full max-w-md" />
+                        <select type="text" name='ExpiredTime'  required className="select select-bordered ml-2">
                             <option>Hour</option>
                             <option>Day</option>
                         </select>
@@ -108,7 +115,7 @@ const AddFood = () => {
                 <label className="label">
                         <span className="label-text">Food Category</span>
                     </label>
-                    <select name='Category' className="select select-bordered w-full max-w-xs">
+                    <select name='Category'  className="select select-bordered w-full max-w-xs">
                         <option disabled selected>Category</option>
                         <option>Fruit and vegetables</option>
                         <option>Starchy food</option>
@@ -124,7 +131,7 @@ const AddFood = () => {
                     <label className="label">
                         <span className="label-text">Additional Notes</span>
                     </label>
-                    <textarea type="text" name='Notes' className="w-full textarea-primary" placeholder="Additional Notes"></textarea>
+                    <textarea type="text" name='Notes' defaultValue={Notes} className="w-full textarea-primary" placeholder="Additional Notes"></textarea>
                 </div>
                 <div className="col-span-full">
                     <input type="submit" value="Add Food" className="btn btn-block" />
@@ -132,8 +139,7 @@ const AddFood = () => {
             </form>
         </div>
 
-
     );
 };
 
-export default AddFood;
+export default Update;

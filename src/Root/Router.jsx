@@ -10,7 +10,10 @@ import AddFood from "../Leout/AddFood/AddFood";
 import AllProduct from "../Leout/AllProduct/AllProduct";
 import ManageFoods from "../Leout/ManageMyFoods/ManageFoods";
 import SingalFood from "../Leout/AllProduct/SingalFood";
-import FoodRe from "../FoodRE/FoodRe";
+import FoodRe from "../Recived-Food/FoodRe";
+import SentReQ from "../Leout/SentFoodRequst/SentReQ";
+import Update from "../Leout/ManageMyFoods/Update";
+
 
   const router = createBrowserRouter([
     {
@@ -48,10 +51,22 @@ import FoodRe from "../FoodRE/FoodRe";
           element:<FoodRe/>
         },
         {
+          path:'/sentFood',
+          element:<SentReQ/>
+        },
+        {
           path:'/SingalFood/:id',
-          element:<SingalFood/>,
-          // loader: ({ params }) => fetch(`http://localhost:5000/addFood/hello/${params.id}`)
-          
+          element:<SingalFood/> 
+        },
+        // Displa Singal Product.......
+        {
+          path:'/Update/:id',
+          element:<SingalFood/> 
+        },
+        // Update Food----
+        {
+          path:'/Updatefood/:id',
+          element:<Update/> 
         }
 
 
