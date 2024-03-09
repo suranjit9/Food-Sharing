@@ -83,6 +83,13 @@ useEffect(()=>{
     });
     setFilterdata(result);
 },[search, myFood])
+// useEffect(()=>{
+//     const result = myFood.filter(food =>{
+//         const searchFilter = food.foodName.toLowerCase().match(search.toLowerCase());
+//         const  
+//     });
+//     setFilterdata(result);
+// },[search, myFood])
 
 
     return (

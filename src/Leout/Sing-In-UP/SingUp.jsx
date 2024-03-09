@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link  } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { authContext } from "../../AuthProvider/AuthProvider";
 import { Helmet } from "react-helmet";
@@ -7,10 +7,12 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import useAxious from "../../Hook/BaseUrl/useAxious";
 const SingUp = () => {
-    const {googleSingup, userCreate, gitSingUp} = useContext(authContext);
+    const { googleSingup, userCreate, gitSingUp } = useContext(authContext);
     const baseUrl = useAxious();
+    const locetion = useLocation();
+    const nevegate =useNavigate();
     // console.log(user);
-    const hendalEmail = e =>{
+    const hendalEmail = e => {
         e.preventDefault();
         const newFrom = new FormData(e.currentTarget)
         const firstname = newFrom.get('firstName');
@@ -19,34 +21,35 @@ const SingUp = () => {
         const password = newFrom.get('password');
         const url = newFrom.get('url');
         let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/;
-        
-        if(password.match(check)){
+
+        if (password.match(check)) {
             console.log("Your password is strong.");
-        }else {
+        } else {
             return Swal.fire(`Oppo!Your Password Is So Week`);
-            
-          }
+
+        }
         console.log(firstname, lastname, email, password);
         userCreate(email, password)
-        .then(result =>{
-            console.log(result.user);
-            
-            const createdAC = result.user?.metadata?.creationTime;
-            // const name = {firstname, lastname, url};
-            
-            const user = {email, createACdate:createdAC, firstname:firstname, lastname:lastname, url:url};
-            baseUrl.post(`/user`,user )
-            .then(res =>{
-                if (res.data.insertedId) {
-                              Swal.fire("Sing Up Successfully!");  
-                            }
-            } )
+            .then(result => {
+                console.log(result.user);
 
-        })
+                const createdAC = result.user?.metadata?.creationTime;
+                // const name = {firstname, lastname, url};
 
-        .catch()
+                const user = { email, createACdate: createdAC, firstname: firstname, lastname: lastname, url: url };
+                baseUrl.post(`/user`, user)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            Swal.fire("Sing Up Successfully!");
+                            nevegate(locetion?.state ? locetion?.state : "/")
+                        }
+                    })
+
+            })
+
+            .catch()
     }
-    
+
     return (
         <div className="min-w-full min-h-screen flex items-center justify-center px-5 py-5">
             <Helmet>
@@ -116,12 +119,12 @@ const SingUp = () => {
                         </form >
                         {/* Sing Ing With Google */}
                         <div className="flex gap-3">
-                                <button onClick={googleSingup} className="btn btn-outline w-1/2 "><FcGoogle className="text-xl" /> Google </button>
-                                <button onClick={gitSingUp} className="btn btn-outline w-1/2"><FaGithub className="text-xl" /> GitHub </button>
+                            <button onClick={googleSingup} className="btn btn-outline w-1/2 "><FcGoogle className="text-xl" /> Google </button>
+                            <button onClick={gitSingUp} className="btn btn-outline w-1/2"><FaGithub className="text-xl" /> GitHub </button>
                         </div>
                         <div className="flex gap-2 justify-center mt-4">
                             <h1>Alredy have an Account Please </h1>
-                            <Link to={'/singIn'}><p  className="text-green-600 font-bold">Log in</p></Link>
+                            <Link to={'/singIn'}><p className="text-green-600 font-bold">Log in</p></Link>
                         </div>
                     </div>
                 </div>

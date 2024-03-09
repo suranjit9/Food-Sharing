@@ -40,7 +40,8 @@ const SingalFood = () => {
         FoodImage:FoodImage,
         coustomerEmail:coustomerEmail,
         coustomerName:coustomerName,
-        retime:retime
+        retime:retime,
+        foodRequst:"Padding"
 
 
 

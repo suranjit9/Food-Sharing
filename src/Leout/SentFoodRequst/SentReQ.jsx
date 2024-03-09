@@ -10,7 +10,7 @@ const SentReQ = () => {
     const {user} = useContext(authContext);
     const [userEmail , setuserEmail] = useState([]);
     const [reData , setreData] = useState([]);
-    // const [foodStust , setfoodStust] = useState('Panding');
+    const [food , setfood] = useState([]);
     
     const userfilt = userEmail[0];
     useEffect(()=>{
@@ -19,14 +19,16 @@ const SentReQ = () => {
     },[baseUrl,user?.email ])
 
     const coustomerEmail = userfilt?.email || user?.email;
-    console.log(userEmail )
-    console.log(user )
+    // console.log(userEmail )
+    // console.log(user )
     // console.log(reData )
-    console.log(coustomerEmail )
+    // console.log(coustomerEmail )
     // const coustomerName = userfilt?.firstname || user?.displayName;
     useEffect(()=>{
         baseUrl.get(`/requstFood/sentreQ?email=${coustomerEmail}`)
-        .then(res => setreData(res.data))
+        .then(res => {
+            setfood(res.data)
+            setreData(res.data)})
     },[baseUrl, coustomerEmail]);
     
     const colamm = [
@@ -56,15 +58,30 @@ const SentReQ = () => {
         },
         {
             name:'Stust',
-            cell:(row)=><Link><button className="btn btn-outline">{row.foodStust}</button></Link>
+            cell:(row)=><button onClick={() => hendalDelate(row._id)} className="btn btn-outline">Deleat</button>
+        },
+        {
+            name:'Stust',
+            cell:(row)=><button  className="btn btn-outline">{row.foodRequst}</button>
         }
         
     ];
+    const hendalDelate = _id =>{
+        baseUrl.delete(`/SentRe/delete/${_id}`)
+        .then(res=>{
+            if (res.data.deletedCount > 0) {
+                const find = reData.filter(item => item._id !== _id  )
+                setfood(find)
+            }else{
+                alert("worrng")
+            }
+        })
+    }
     return (
         <div>
             <DataTable
     columns={colamm} 
-    data={reData}
+    data={food}
     pagination
     fixedHeader
     selectableRows

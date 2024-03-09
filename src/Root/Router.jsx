@@ -13,6 +13,7 @@ import SingalFood from "../Leout/AllProduct/SingalFood";
 import FoodRe from "../Recived-Food/FoodRe";
 import SentReQ from "../Leout/SentFoodRequst/SentReQ";
 import Update from "../Leout/ManageMyFoods/Update";
+import PrivedRoute from "../PrivedRoute/PrivedRoute";
 
 
   const router = createBrowserRouter([
@@ -35,7 +36,7 @@ import Update from "../Leout/ManageMyFoods/Update";
         },
         {
           path:'/AddFood',
-          element:<AddFood/>,
+          element:<PrivedRoute><AddFood/></PrivedRoute>,
           
         },
         {
@@ -44,29 +45,29 @@ import Update from "../Leout/ManageMyFoods/Update";
         },
         {
           path:'/ManageFoods',
-          element:<ManageFoods/>
+          element:<PrivedRoute><ManageFoods/></PrivedRoute>
         },
         {
           path:'/requstFood',
-          element:<FoodRe/>
+          element:<PrivedRoute><FoodRe/></PrivedRoute>
         },
         {
           path:'/sentFood',
-          element:<SentReQ/>
+          element:<PrivedRoute><SentReQ/></PrivedRoute> 
         },
         {
           path:'/SingalFood/:id',
-          element:<SingalFood/> 
+          element:<PrivedRoute><SingalFood/> </PrivedRoute>
         },
         // Displa Singal Product.......
-        {
-          path:'/Update/:id',
-          element:<SingalFood/> 
-        },
+        // {
+        //   path:'/Update/:id',
+        //   element:<SingalFood/> 
+        // },
         // Update Food----
         {
           path:'/Updatefood/:id',
-          element:<Update/> 
+          element:<PrivedRoute><Update/></PrivedRoute> 
         }
 
 

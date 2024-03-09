@@ -56,10 +56,14 @@ const FoodRe = () => {
         },
         {
             name:'Stust',
-            cell:(row)=><Link><button className="btn btn-outline" onClick={()=>alert(row.foodName)}>{foodStust}</button></Link>
+            cell:(row)=><Link><button className="btn btn-outline" onClick={()=>handelStust(row._id)}>{row.foodRequst}</button></Link>
         }
         
     ];
+    const handelStust = _id =>{
+        baseUrl.patch(`/requstFood/foodWoner/${_id}`,{foodRequst:'Delivery'})
+        .then(res=>console.log(res.data))
+    }
     return <DataTable
     columns={colamm} 
     data={reData}
