@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import useAxious from "../Hook/BaseUrl/useAxious";
 
 
 
@@ -14,6 +15,7 @@ const AuthProvider = ({children}) => {
     const [loder, setLoder]= useState(true);
     const googleProvider = new GoogleAuthProvider();
     const GitHubSinUP = new GithubAuthProvider();
+    const baseUrl = useAxious();
 
     // console.log('Auth',user);
     const userCreate =(email, password)=>{
@@ -44,12 +46,22 @@ const AuthProvider = ({children}) => {
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, currentUsere =>{
+            const userEmail = currentUsere?.email || user?.email;
+            const logUser = {email: userEmail};
             setUser(currentUsere);
             // console.log('currntUser',currentUsere );
             setLoder(false);
+            if (currentUsere) {
+               
+                baseUrl.post("/jwt",logUser)
+                .then(res => console.log(res.data))
+            }else(
+                baseUrl.post('/logout',logUser)
+                .then(res=> console.log(res.data))
+            )
         });
         return ()=>{unsubscribe();} 
-    },[])
+    },[baseUrl])
 
     // Export EveryWhere
     const authInfo ={
